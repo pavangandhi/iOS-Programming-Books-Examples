@@ -7,5 +7,3 @@ If you find these examples helpful and you haven't purchased the books, please c
 
 The downloadable code for the two previous editions has been moved off to subfolders "iOS8bookExamples" and "iOS7bookExamples". The code for the earlier editions has been removed.
 
-Matt Neuburg
-
