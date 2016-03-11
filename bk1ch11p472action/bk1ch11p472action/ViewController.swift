@@ -10,11 +10,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         self.button.addTarget(self,
-            action: "buttonPressed:",
+            action: #selector(buttonPressed),
             forControlEvents: .TouchUpInside)
         
         self.button2.addTarget(nil, // nil-targeted
-            action: "buttonPressed:",
+            action: #selector(buttonPressed),
             forControlEvents: .TouchUpInside)
 
         // third button is configured as nil-targeted in nib
@@ -32,11 +32,8 @@ class ViewController: UIViewController {
     // rewritten to avoid use of C-style for loop
 
     @IBAction func showResponderChain(sender: UIResponder) {
-        var r : UIResponder? = sender
-        while r != nil {
-            print(r!)
-            r = r!.nextResponder()
-        }
+        var r : UIResponder! = sender
+        repeat { print(r, "\n"); r = r.nextResponder() } while r != nil
     }
 
 }

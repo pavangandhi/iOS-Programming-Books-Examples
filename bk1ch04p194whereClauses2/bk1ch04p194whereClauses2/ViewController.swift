@@ -7,7 +7,7 @@ import UIKit
 // ==== colon and protocol
 
 protocol Flier {
-    typealias Other
+    associatedtype Other
 }
 struct Bird : Flier {
     typealias Other = String
@@ -88,7 +88,7 @@ class ViewController: UIViewController {
         s.appendContentsOf(["!" as Character])
         print(s) // "hello world"
         
-        var arr = ["mannie", "moe"]
+        var arr = ["manny", "moe"]
         arr.appendContentsOf(["jack"])
         // arr.appendContentsOf([1]) // nope
         

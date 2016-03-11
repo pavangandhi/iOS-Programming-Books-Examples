@@ -40,10 +40,10 @@ class ViewController : UICollectionViewController, UICollectionViewDelegateFlowL
             sectionData[sectionData.count-1].append( aState )
         }
         
-        let b = UIBarButtonItem(title:"Switch", style:.Plain, target:self, action:"doSwitch:")
+        let b = UIBarButtonItem(title:"Switch", style:.Plain, target:self, action:#selector(doSwitch(_:)))
         self.navigationItem.leftBarButtonItem = b
         
-        let b2 = UIBarButtonItem(title:"Delete", style:.Plain, target:self, action:"doDelete:")
+        let b2 = UIBarButtonItem(title:"Delete", style:.Plain, target:self, action:#selector(doDelete(_:)))
         self.navigationItem.rightBarButtonItem = b2
         
         self.collectionView!.backgroundColor = UIColor.whiteColor()
@@ -210,7 +210,7 @@ class ViewController : UICollectionViewController, UICollectionViewDelegateFlowL
             return
         }
         // sort
-        let arr2 = ((arr as NSArray).sortedArrayUsingSelector(Selector("compare:")) as! [NSIndexPath])
+        let arr2 = ((arr as NSArray).sortedArrayUsingSelector(#selector(NSIndexPath.compare(_:))) as! [NSIndexPath])
         // delete data
         var empties = [Int]() // keep track of what sections get emptied
         for ip in arr2.reverse() {
@@ -240,22 +240,22 @@ class ViewController : UICollectionViewController, UICollectionViewDelegateFlowL
     // exactly as for table views
     
     override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        let mi = UIMenuItem(title:"Capital", action:"capital:")
+        let mi = UIMenuItem(title:"Capital", action:#selector(Cell.capital))
         UIMenuController.sharedMenuController().menuItems = [mi]
         return true
     }
     
     override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return (action == "copy:") || (action == "capital:")
+        return (action == #selector(copy(_:))) || (action == #selector(Cell.capital))
     }
     
     override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
         // in real life, would do something here
         let state = self.sectionData[indexPath.section][indexPath.row]
-        if action == "copy:" {
+        if action == #selector(copy(_:)) {
             print ("copying \(state)")
         }
-        else if action == "capital:" {
+        else if action == #selector(Cell.capital) {
             print ("fetching the capital of \(state)")
         }
     }

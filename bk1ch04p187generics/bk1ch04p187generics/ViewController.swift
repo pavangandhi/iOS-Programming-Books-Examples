@@ -13,7 +13,7 @@ struct Bird : Flier {
 }
 
 protocol Flier2 {
-    typealias Other
+    associatedtype Other
     func flockTogetherWith(f:Self.Other) // just showing that this is legal
     func mateWith(f:Other)
 }
@@ -45,15 +45,15 @@ let vd : Void = flockTwoTogether("hey", 1)
 
 /*
 
-protocol Flier3 {
-    typealias Other : Flier3
+protocol Flier3a {
+    associatedtype Other : Flier3a
     func flockTogetherWith(f:Other)
 }
-struct Bird3 : Flier3 {
-    func flockTogetherWith(f:Insect3) {}
+struct Bird3a : Flier3a {
+    func flockTogetherWith(f:Insect3a) {}
 }
-struct Insect3 : Flier3 {
-    func flockTogetherWith(f:Insect3) {}
+struct Insect3a : Flier3a {
+    func flockTogetherWith(f:Insect3a) {}
 }
 
 */
@@ -65,7 +65,7 @@ struct Insect3 : Flier3 {
 protocol Superflier3 {}
 
 protocol Flier3 : Superflier3 {
-    typealias Other : Superflier3
+    associatedtype Other : Superflier3
     func flockTogetherWith(f:Other)
 }
 struct Bird3 : Flier3 {
@@ -98,7 +98,7 @@ func myMin<T:Comparable>(things:T...) -> T {
 // it can _only_ be used as a type constraint, as in flockTwoTogether2
 
 protocol Flier4 {
-    typealias Other
+    associatedtype Other
 }
 struct Bird4 : Flier4 {
     typealias Other = String
@@ -126,8 +126,19 @@ class NoisyDog : Dog<String> {} // yes! This is new in Swift 2.0
 class NoisyDog2<T> : Dog<T> {} // and this is also legal!
 // class NoisyDog3 : Dog<T> {} // but this is not; the superclass generic must be resolved somehow
 
+struct Wrapper<T> {
+    
+}
+struct Wrapper2<T> {
+    var thing : T
+}
+class Cat {
+}
+class CalicoCat : Cat {
+}
+
 protocol Flier6 {
-    typealias Other
+    associatedtype Other
     func fly()
 }
 
@@ -156,6 +167,17 @@ class ViewController: UIViewController {
         
         let min = myMin(4,1,5,2)
         print(min)
+        
+        do {
+            // let w : Wrapper<Cat> = Wrapper<CalicoCat>() // error
+            var w2 : Wrapper2<Cat> = Wrapper2(thing:CalicoCat()) // fine
+            let w3 = Wrapper2(thing:CalicoCat())
+            // w2 = w3 // error
+            // ==== shut up the compiler
+            w2 = Wrapper2(thing:CalicoCat())
+            _ = w2
+            _ = w3
+        }
         
     }
 }
